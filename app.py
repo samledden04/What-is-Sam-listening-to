@@ -18,16 +18,6 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     cache_path=".spotify_token_cache"
 ))
 
-# while True:
-#     current = sp.current_playback()
-#     if current and current.get('is_playing'):
-#         track = current['item']
-#         print(f"Now Playing: {track['name']} by {', '.join(artist['name'] for artist in track['artists'])}")
-#     else:
-#         print("Nothing is currently playing.")
-
-#     time.sleep(10)
-
 @app.route("/")
 def serve_react():
     return send_from_directory(app.static_folder, 'index.html')
