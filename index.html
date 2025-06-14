@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> What is Sam listening to? </title>
+    <style>
+        body {font-family: Arial; text-align: center; padding-top: 50px;}
+        img {width: 300px; border-radius: 10px;}
+        #track { font-size: 1.5em; margin-top: 20px;}
+        #artist, #album {color: #666;}
+    </style>
+</head>
+
+<body>
+    <h1>What is Sam listening to?</h1>
+    <div id="content">
+        <img id="cover" src="" alt="" />
+        <div id="track"></div>
+        <div id="artist"></div>
+        <div id="album"></div>
+    </div>
+
+    <script>
+        async function fetchSong() {
+            const res = await fetch('/current_song');
+            const data = await res.json();
+
+            if(data.message) {
+                document.getElementById('track').innerText = data.message;
+                document.getElementById('artist').innerText = '';
+                document.getElementById('album').innerText = '';
+                document.getElementById('cover').src = '';
+            } else {
+                document.getElementById('track').innerText = data.name;
+                document.getElementById('artist').innerText = "By: " + data.artists.join(", ");
+                document.getElementById('album').innerText = "Album: " + data.album;
+                document.getElementById('cover').src = data.image;
+            }
+        }
+
+        fetchSong();
+        setInterval(fetchSong, 10000);
+    </script>
+</body>
+</html>
